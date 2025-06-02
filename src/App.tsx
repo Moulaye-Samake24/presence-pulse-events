@@ -3,11 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
 import Index from "./pages/Index";
 import EventManagement from "./pages/EventManagement";
 import SimpleDashboard from "./pages/SimpleDashboard";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -18,9 +20,23 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/events" element={<EventManagement />} />
-          <Route path="/simple-dashboard" element={<SimpleDashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/dashboard" element={
+            <ProtectedRoute>
+              <Index />
+            </ProtectedRoute>
+          } />
+          <Route path="/events" element={
+            <ProtectedRoute>
+              <EventManagement />
+            </ProtectedRoute>
+          } />
+          <Route path="/simple-dashboard" element={
+            <ProtectedRoute>
+              <SimpleDashboard />
+            </ProtectedRoute>
+          } />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

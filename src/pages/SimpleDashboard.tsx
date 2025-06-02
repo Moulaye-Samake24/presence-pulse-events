@@ -1,10 +1,17 @@
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, Building2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Users, Building2, LogOut } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const SimpleDashboard = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userEmail');
+    navigate('/login');
+  };
+
   const teamData = [
     {
       name: "Marketing",
@@ -56,11 +63,17 @@ const SimpleDashboard = () => {
             <h1 className="text-3xl font-bold text-gray-900">
               Dashboard Simplifié
             </h1>
-            <Link to="/">
-              <Button variant="outline">
-                Retour au Dashboard Principal
+            <div className="flex gap-2">
+              <Link to="/dashboard">
+                <Button variant="outline">
+                  Dashboard Principal
+                </Button>
+              </Link>
+              <Button variant="outline" onClick={handleLogout}>
+                <LogOut className="mr-2 h-4 w-4" />
+                Déconnexion
               </Button>
-            </Link>
+            </div>
           </div>
           <p className="text-gray-600">
             Vue simplifiée des présences par équipe
