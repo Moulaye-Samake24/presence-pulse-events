@@ -5,9 +5,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import Index from "./pages/Index";
+import MainDashboard from "./pages/MainDashboard";
 import EventManagement from "./pages/EventManagement";
-import SimpleDashboard from "./pages/SimpleDashboard";
+import OfficePulse from "./pages/OfficePulse";
+import PeopleDashboard from "./pages/PeopleDashboard";
+import PeopleByZonePage from "./pages/PeopleByZonePage";
+import SimpleGoogleSheetsTest from "./pages/SimpleGoogleSheetsTest";
+import NewOfficePulse from "./pages/NewOfficePulse";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -21,10 +25,35 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          <Route path="/" element={<Navigate to="/office-pulse" replace />} />
+          
+          {/* Route principale - Dashboard unifié */}
           <Route path="/dashboard" element={
             <ProtectedRoute>
-              <Index />
+              <MainDashboard />
+            </ProtectedRoute>
+          } />
+          
+          {/* Routes spécialisées */}
+          <Route path="/office-pulse" element={
+            <ProtectedRoute>
+              <NewOfficePulse />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/office-pulse-old" element={
+            <ProtectedRoute>
+              <OfficePulse />
+            </ProtectedRoute>
+          } />
+          <Route path="/people" element={
+            <ProtectedRoute>
+              <PeopleDashboard />
+            </ProtectedRoute>
+          } />
+          <Route path="/people-by-zone" element={
+            <ProtectedRoute>
+              <PeopleByZonePage />
             </ProtectedRoute>
           } />
           <Route path="/events" element={
@@ -32,12 +61,15 @@ const App = () => (
               <EventManagement />
             </ProtectedRoute>
           } />
-          <Route path="/simple-dashboard" element={
+          
+          {/* Route de test/configuration */}
+          <Route path="/test-sheets" element={
             <ProtectedRoute>
-              <SimpleDashboard />
+              <SimpleGoogleSheetsTest />
             </ProtectedRoute>
           } />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          
+          {/* Route 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -24,7 +24,7 @@ const Login = () => {
         // Stocker l'état de connexion dans localStorage
         localStorage.setItem('isAuthenticated', 'true');
         localStorage.setItem('userEmail', email);
-        navigate('/simple-dashboard');
+        navigate('/office-pulse');
       }
       setIsLoading(false);
     }, 1000);
