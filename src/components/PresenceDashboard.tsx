@@ -1,6 +1,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users, UserCheck, UserX, Calendar, Clock, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Users, UserCheck, UserX, Calendar, Clock, TrendingUp, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 import PresenceStats from "./PresenceStats";
 import EmployeeList from "./EmployeeList";
 import UpcomingEvents from "./UpcomingEvents";
@@ -10,9 +12,17 @@ const PresenceDashboard = () => {
     <div className="container mx-auto p-6 space-y-6">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Dashboard des Présences
-        </h1>
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-3xl font-bold text-gray-900">
+            Dashboard des Présences
+          </h1>
+          <Link to="/events">
+            <Button>
+              <Settings className="h-4 w-4 mr-2" />
+              Gérer les Événements
+            </Button>
+          </Link>
+        </div>
         <p className="text-gray-600">
           Gérez les présences de vos employés et suivez les événements à venir
         </p>
