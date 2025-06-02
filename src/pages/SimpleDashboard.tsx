@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users, Building2, LogOut } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -55,40 +56,40 @@ const SimpleDashboard = () => {
   const totalEmployees = teamData.reduce((sum, team) => sum + team.total, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-yellow-50">
       <div className="container mx-auto p-6 space-y-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-black">
               Dashboard Simplifié
             </h1>
             <div className="flex gap-2">
               <Link to="/dashboard">
-                <Button variant="outline">
+                <Button variant="outline" className="border-2 border-black text-black hover:bg-yellow-100">
                   Dashboard Principal
                 </Button>
               </Link>
-              <Button variant="outline" onClick={handleLogout}>
+              <Button variant="outline" onClick={handleLogout} className="border-2 border-black text-black hover:bg-yellow-100">
                 <LogOut className="mr-2 h-4 w-4" />
                 Déconnexion
               </Button>
             </div>
           </div>
-          <p className="text-gray-600">
+          <p className="text-gray-800">
             Vue simplifiée des présences par équipe
           </p>
         </div>
 
         {/* Total Summary Card */}
-        <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white mb-6">
+        <Card className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-black mb-6 border-2 border-black">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-lg font-medium">Total Présents Aujourd'hui</CardTitle>
             <Building2 className="h-6 w-6" />
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold">{totalPresent}</div>
-            <p className="text-sm opacity-80">
+            <p className="text-sm font-medium">
               sur {totalEmployees} employés ({Math.round((totalPresent / totalEmployees) * 100)}%)
             </p>
           </CardContent>
@@ -97,46 +98,46 @@ const SimpleDashboard = () => {
         {/* Teams Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {teamData.map((team) => (
-            <Card key={team.name} className="hover:shadow-lg transition-shadow">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-                <CardTitle className="text-lg font-semibold text-gray-900">
+            <Card key={team.name} className="hover:shadow-lg transition-shadow border-2 border-black">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3 bg-yellow-100">
+                <CardTitle className="text-lg font-semibold text-black">
                   {team.name}
                 </CardTitle>
-                <Users className="h-5 w-5 text-gray-600" />
+                <Users className="h-5 w-5 text-black" />
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
                   {/* Stats */}
                   <div className="flex items-center justify-between">
-                    <div className="text-2xl font-bold text-green-600">
+                    <div className="text-2xl font-bold text-yellow-600">
                       {team.present}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-700 font-medium">
                       / {team.total} employés
                     </div>
                   </div>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-2">
+                  <div className="w-full bg-gray-300 rounded-full h-3 border border-black">
                     <div 
-                      className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-yellow-400 h-3 rounded-full transition-all duration-300 border-r border-black"
                       style={{ width: `${(team.present / team.total) * 100}%` }}
                     ></div>
                   </div>
                   
                   {/* Percentage */}
-                  <div className="text-center text-sm font-medium text-gray-700">
+                  <div className="text-center text-sm font-bold text-black">
                     {Math.round((team.present / team.total) * 100)}% présents
                   </div>
                   
                   {/* Present Members List */}
-                  <div className="border-t pt-3">
-                    <p className="text-xs font-medium text-gray-600 mb-2">Présents :</p>
+                  <div className="border-t-2 border-black pt-3">
+                    <p className="text-xs font-bold text-black mb-2">Présents :</p>
                     <div className="space-y-1 max-h-32 overflow-y-auto">
                       {team.members.slice(0, team.present).map((member, index) => (
                         <div key={index} className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                          <span className="text-xs text-gray-700">{member}</span>
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full border border-black"></div>
+                          <span className="text-xs text-black font-medium">{member}</span>
                         </div>
                       ))}
                     </div>

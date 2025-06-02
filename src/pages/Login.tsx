@@ -31,16 +31,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md border-2 border-black">
         <CardHeader className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
-            <Building2 className="h-8 w-8 text-white" />
+          <div className="mx-auto w-16 h-16 bg-black rounded-full flex items-center justify-center">
+            <Building2 className="h-8 w-8 text-yellow-400" />
           </div>
-          <CardTitle className="text-2xl font-bold text-gray-900">
+          <CardTitle className="text-2xl font-bold text-black">
             Dashboard RH
           </CardTitle>
-          <p className="text-gray-600">
+          <p className="text-gray-800">
             Connectez-vous pour accéder au dashboard des présences
           </p>
         </CardHeader>
@@ -48,7 +48,7 @@ const Login = () => {
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-black font-semibold">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -56,11 +56,12 @@ const Login = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="border-2 border-black focus:border-yellow-400"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe</Label>
+              <Label htmlFor="password" className="text-black font-semibold">Mot de passe</Label>
               <Input
                 id="password"
                 type="password"
@@ -68,12 +69,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                className="border-2 border-black focus:border-yellow-400"
               />
             </div>
             
             <Button 
               type="submit" 
-              className="w-full"
+              className="w-full bg-yellow-400 text-black hover:bg-yellow-500 border-2 border-black font-semibold"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -87,8 +89,8 @@ const Login = () => {
             </Button>
           </form>
           
-          <div className="mt-6 text-center text-sm text-gray-500">
-            <p>Comptes de démonstration :</p>
+          <div className="mt-6 text-center text-sm text-gray-700 bg-yellow-100 p-3 rounded border-2 border-black">
+            <p className="font-semibold">Comptes de démonstration :</p>
             <p className="mt-1">
               <span className="font-medium">admin@entreprise.com</span> / 
               <span className="font-medium"> admin123</span>
