@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Users, MapPin, X, SortAsc, Filter } from "lucide-react";
 import PersonCard from "./PersonCard";
 import { PulseData } from "../services/googleSheets";
-import { Employee } from "../services/googleSheetsSimple";
+import { Employee, simpleGoogleSheetsService } from "../services/googleSheetsSimple";
 
 interface PeopleSearchProps {
   pulseData: PulseData[];
@@ -34,7 +34,7 @@ const PeopleSearch: React.FC<PeopleSearchProps> = ({ pulseData, employees }) => 
     
     pulseData.forEach(zone => {
       if (zone.people) {
-        const names = zone.people.split(';').map(name => name.trim()).filter(name => name.length > 0);
+        const names = simpleGoogleSheetsService.parseAndCleanNames(zone.people);
         names.forEach(name => {
           const employee = employees.find(emp => 
             emp.nom.toLowerCase().includes(name.toLowerCase()) || 

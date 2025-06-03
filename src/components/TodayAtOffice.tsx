@@ -2,10 +2,11 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Users, MapPin, Clock } from "lucide-react";
-import { usePulseData } from '@/hooks/usePulseData';
+import { useTodayPulseData } from '@/hooks/useDashboardData';
+import { dashboardService } from '@/services/dashboardService';
 
 const TodayAtOffice: React.FC = () => {
-  const { pulseData, isLoading, error } = usePulseData();
+  const { pulseData, isLoading, error } = useTodayPulseData();
 
   if (isLoading) {
     return (
@@ -50,15 +51,14 @@ const TodayAtOffice: React.FC = () => {
   // Extraire toutes les personnes présentes
   const allPeople = pulseData
     .filter(zone => zone.people && zone.people.trim())
-    .flatMap(zone => 
-      zone.people.split(';')
-        .map(person => person.trim())
-        .filter(person => person.length > 0)
-        .map(person => ({
-          name: person,
-          zone: zone.zone
-        }))
-    );
+    .flatMap(zone => {
+      // Utiliser la fonction parseAndCleanNames pour nettoyer les noms
+      const cleanNames = dashboardService.parseAndCleanNames(zone.people);
+      return cleanNames.map(name => ({
+        name: name,
+        zone: zone.zone
+      }));
+    });
 
   const getZoneColor = (zoneName: string) => {
     const colors = {
@@ -108,7 +108,7 @@ const TodayAtOffice: React.FC = () => {
                     </Badge>
                   </div>
                   <div className="text-xs text-gray-600">
-                    {zone.people.split(';').map(person => person.trim()).filter(p => p).join(', ')}
+                    {dashboardService.parseAndCleanNames(zone.people).join(', ')}
                   </div>
                 </div>
               ))}

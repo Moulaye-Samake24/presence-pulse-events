@@ -4,8 +4,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Users, Clock, RefreshCw, Search, MapPin, User, Wifi, WifiOff } from "lucide-react";
-import { usePulseData } from "../hooks/usePulseData";
-import { simpleGoogleSheetsService } from "../services/googleSheetsSimple";
+import { useTodayPulseData } from "../hooks/useDashboardData";
+import { dashboardService } from "../services/dashboardService";
 import PersonAvatar from "./PersonAvatar";
 import QuickStats from "./QuickStats";
 import './SimplifiedDashboard.css';
@@ -16,13 +16,13 @@ interface PersonInfo {
 }
 
 const SimplifiedDashboard = () => {
-  const { pulseData, isLoading, error, refresh } = usePulseData();
+  const { pulseData, isLoading, error, refresh } = useTodayPulseData();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedZone, setSelectedZone] = useState<string | null>(null);
 
   // Parse les noms des personnes depuis le format "Nom P.; Autre N.; ..."
   const parsePersonNames = (peopleString: string): string[] => {
-    return simpleGoogleSheetsService.parseAndCleanNames(peopleString);
+    return dashboardService.parseAndCleanNames(peopleString);
   };
 
   // Créer une liste de toutes les personnes avec leur zone

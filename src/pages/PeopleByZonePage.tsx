@@ -5,6 +5,7 @@ import { Users, ArrowLeft, RefreshCw, UserCheck, Clock, Building, TrendingUp } f
 import { Link } from "react-router-dom";
 import { usePulseData, useEmployeesData } from "../hooks/usePulseData";
 import PeopleList from "../components/PeopleList";
+import { simpleGoogleSheetsService } from "../services/googleSheetsSimple";
 
 const PeopleByZonePage = () => {
   const { pulseData, isLoading, error, refresh } = usePulseData();
@@ -13,7 +14,8 @@ const PeopleByZonePage = () => {
   // Calculs des statistiques générales
   const allPeople = pulseData.flatMap(zone => {
     if (zone.people) {
-      return zone.people.split(';').map(name => name.trim()).filter(name => name.length > 0);
+      // Utiliser la fonction parseAndCleanNames pour nettoyer les noms
+      return simpleGoogleSheetsService.parseAndCleanNames(zone.people);
     }
     return [];
   });
@@ -67,7 +69,7 @@ const PeopleByZonePage = () => {
               </Button>
             </Link>
             <Button 
-              onClick={refresh} 
+              onClick={() => refresh()} 
               variant="outline" 
               size="sm"
               className="border-2 border-black"

@@ -15,14 +15,15 @@ import {
   Info,
   AlertCircle
 } from "lucide-react";
-import { usePulseData } from '@/hooks/usePulseData';
+import { useTodayPulseData } from '@/hooks/useDashboardData';
 import { useNavigate } from 'react-router-dom';
 import TodayAtOffice from './TodayAtOffice';
 import PresencePlanning from './PresencePlanning';
+import { dashboardService } from '../services/dashboardService';
 import './UnifiedDashboard.css';
 
 const UnifiedDashboard: React.FC = () => {
-  const { pulseData, isLoading, error, refresh } = usePulseData();
+  const { pulseData, isLoading, error, refresh } = useTodayPulseData();
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const navigate = useNavigate();
 
@@ -216,7 +217,7 @@ const UnifiedDashboard: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {pulseData.map((zone, index) => {
                 const occupancyRate = zone.capacity > 0 ? (zone.count / zone.capacity) : 0;
-                const peopleList = zone.people.split(';').filter(p => p.trim()).map(p => p.trim());
+                const peopleList = dashboardService.parseAndCleanNames(zone.people);
                 
                 return (
                   <Card key={index} className="hover:shadow-lg transition-shadow">
@@ -279,7 +280,7 @@ const UnifiedDashboard: React.FC = () => {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {pulseData.map((zone) => {
-                    const peopleList = zone.people.split(';').filter(p => p.trim()).map(p => p.trim());
+                    const peopleList = dashboardService.parseAndCleanNames(zone.people);
                     
                     return peopleList.map((person, idx) => (
                       <div key={`${zone.zone}-${idx}`} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">

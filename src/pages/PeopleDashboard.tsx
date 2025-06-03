@@ -6,6 +6,7 @@ import { Users, ArrowLeft, RefreshCw, MapPin, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePulseData, useEmployeesData } from "../hooks/usePulseData";
 import PeopleSearch from "../components/PeopleSearch";
+import { simpleGoogleSheetsService } from "../services/googleSheetsSimple";
 
 const PeopleDashboard = () => {
   const { pulseData, isLoading, error, refresh } = usePulseData();
@@ -14,7 +15,7 @@ const PeopleDashboard = () => {
   // Calculs des statistiques pour les personnes
   const allPeople = pulseData.flatMap(zone => {
     if (zone.people) {
-      return zone.people.split(';').map(name => name.trim()).filter(name => name.length > 0);
+      return simpleGoogleSheetsService.parseAndCleanNames(zone.people);
     }
     return [];
   });
@@ -54,7 +55,7 @@ const PeopleDashboard = () => {
   const zoneSummary = pulseData
     .map(zone => ({
       ...zone,
-      peopleList: zone.people ? zone.people.split(';').map(p => p.trim()).filter(p => p.length > 0) : []
+      peopleList: zone.people ? simpleGoogleSheetsService.parseAndCleanNames(zone.people) : []
     }))
     .sort((a, b) => b.count - a.count);
 

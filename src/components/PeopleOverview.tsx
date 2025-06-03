@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Users, MapPin, Eye, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { PulseData, Employee } from "../services/googleSheetsSimple";
+import { PulseData, Employee, simpleGoogleSheetsService } from "../services/googleSheetsSimple";
 
 interface PeopleOverviewProps {
   pulseData: PulseData[];
@@ -15,7 +15,7 @@ const PeopleOverview = ({ pulseData, employees, isLoading = false }: PeopleOverv
   // Calculs des statistiques
   const allPeople = pulseData.flatMap(zone => {
     if (zone.people) {
-      return zone.people.split(';').map(name => name.trim()).filter(name => name.length > 0);
+      return simpleGoogleSheetsService.parseAndCleanNames(zone.people);
     }
     return [];
   });
@@ -107,7 +107,7 @@ const PeopleOverview = ({ pulseData, employees, isLoading = false }: PeopleOverv
             </h4>
             {topZones.map((zone, index) => {
               const peopleInZone = zone.people 
-                ? zone.people.split(';').map(name => name.trim()).filter(name => name.length > 0)
+                ? simpleGoogleSheetsService.parseAndCleanNames(zone.people)
                 : [];
               
               return (

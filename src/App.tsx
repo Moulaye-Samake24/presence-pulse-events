@@ -7,11 +7,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import MainDashboard from "./pages/MainDashboard";
 import EventManagement from "./pages/EventManagement";
-import OfficePulse from "./pages/OfficePulse";
 import PeopleDashboard from "./pages/PeopleDashboard";
 import PeopleByZonePage from "./pages/PeopleByZonePage";
 import SimpleGoogleSheetsTest from "./pages/SimpleGoogleSheetsTest";
+import DashboardTest from "./pages/DashboardTest";
 import NewOfficePulse from "./pages/NewOfficePulse";
+import DebugPulseData from "./pages/DebugPulseData";
+import QuickTest from "./pages/QuickTest";
+import TestPage from "./pages/TestPage";
+import DiagnosticPage from "./pages/DiagnosticPage";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -41,11 +45,7 @@ const App = () => (
             </ProtectedRoute>
           } />
           
-          <Route path="/office-pulse-old" element={
-            <ProtectedRoute>
-              <OfficePulse />
-            </ProtectedRoute>
-          } />
+
           <Route path="/people" element={
             <ProtectedRoute>
               <PeopleDashboard />
@@ -62,10 +62,40 @@ const App = () => (
             </ProtectedRoute>
           } />
           
-          {/* Route de test/configuration */}
+          {/* Routes de test/configuration */}
           <Route path="/test-sheets" element={
             <ProtectedRoute>
               <SimpleGoogleSheetsTest />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/test-dashboard" element={
+            <ProtectedRoute>
+              <DashboardTest />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/debug-pulse" element={
+            <ProtectedRoute>
+              <DebugPulseData />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/quick-test" element={
+            <ProtectedRoute>
+              <QuickTest />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/test-page" element={
+            <ProtectedRoute>
+              <TestPage />
+            </ProtectedRoute>
+          } />
+          
+          <Route path="/diagnostic" element={
+            <ProtectedRoute>
+              <DiagnosticPage />
             </ProtectedRoute>
           } />
           
